@@ -1,0 +1,35 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    },
+    "cordova-plugin-background-mode": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    },
+    "cordova-android-support-gradle-release": {
+      "ANDROID_SUPPORT_VERSION": "27.+",
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "fleet.readyfleetservice.com"
+    }
+  }
+}
