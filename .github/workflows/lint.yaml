@@ -1,0 +1,48 @@
+name: Lint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - new-master
+    paths:
+      - "**.js"
+      - "**.jsx"
+      - "**.css"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache-dependency
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-cache-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-cache-
+
+      - name: Install dependencies
+        if: steps.cache-dependency.outputs.cache-hit != 'true'
+        run: bun build/github_action/lint/install.js
+
+      - name: Fetch changed files
+        id: changed-files
+        run: bun build/github_action/changed_files/index.js
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+
+      - name: Run Lint
+        run: echo ${{ steps.changed-files.outputs.lint_changed_files }} | ./build/scripts/lint.sh
